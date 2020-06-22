@@ -4,8 +4,9 @@ BluetoothSerial SerialBT;
 
 void setup()
 {
+	//Bluetoothを利用する場合は9600を利用
 	Serial.begin(9600);
-	SerialBT.begin("ESP32-XXXXX");
+	SerialBT.begin("ESP32-13787");
 }
 
 int count = 0;
