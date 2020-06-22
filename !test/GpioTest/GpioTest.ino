@@ -36,7 +36,7 @@ void set_led_status(int status) // status : 0->Off, not zero->On
 //=====================================
 // Initialize button
 //=====================================
-//ピンが押されたら入力
+//ボタンが押される＝入力
 void init_button()
 {
     pinMode(PIN_BUTTON, INPUT);
