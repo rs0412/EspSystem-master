@@ -13,6 +13,7 @@
 //=====================================
 // Initialize LED
 //=====================================
+//LED出力
 void init_led()
 {
     pinMode(PIN_LED, OUTPUT);
@@ -24,7 +25,7 @@ void init_led()
 //=====================================
 void set_led_status(int status) // status : 0->Off, not zero->On 
 {
-    if(status) { 
+    if(status == 1) { 
         digitalWrite(PIN_LED, HIGH);    // turn on LED.
     }
     else {
@@ -35,9 +36,10 @@ void set_led_status(int status) // status : 0->Off, not zero->On
 //=====================================
 // Initialize button
 //=====================================
+//ピンが押されたら入力
 void init_button()
 {
-    pinMode(PIN_BUTTON, OUTPUT);
+    pinMode(PIN_BUTTON, INPUT);
 }
 
 //=====================================
@@ -46,7 +48,7 @@ void init_button()
 int get_button_status()
 {
 	int button_status = digitalRead(PIN_BUTTON);
-    if(button_status == 1) { // If button is pushed
+    if(button_status == 0) { // If button is pushed
         return  1;
     }
     else {
@@ -75,6 +77,9 @@ void loop()
 	
     if(button_status) { // If button is pushed, turn on LED.
         set_led_status(1);
+    }
+    else{
+        set_led_status(0);
     }
         
 }
