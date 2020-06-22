@@ -46,7 +46,7 @@ void init_button()
 int get_button_status()
 {
 	int button_status = digitalRead(PIN_BUTTON);
-    if(button_status == 0) { // If button is pushed
+    if(button_status == 1) { // If button is pushed
         return  1;
     }
     else {
