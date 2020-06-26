@@ -1,44 +1,24 @@
-#include <WiFi.h>
+#  
 #include "DHT.h"
-#include <Ambient.h>
 
-const char* ssid = "XXXXXXXX";
-const char* password = "XXXXXXXX";
+#define DHT11_PIN   (33)
 
-WiFiClient client;
-Ambient ambient;
+DHT dht(DHT11_PIN, DHT11);  // æ¸©æ¹¿åº¦ã‚»ãƒ³ã‚µãƒ¼ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 
-DHT dht(33,DHT11);  //2”Ôƒ|[ƒg
-
-unsigned int channelId = 20947; // Ambient‚Ìƒ`ƒƒƒlƒ‹ID
-const char* writeKey = "10cdb0759b1a687e"; // ƒ‰ƒCƒgƒL[
-
-void setup() {
+void setup() 
+{
     Serial.begin(115200);
     while (!Serial) ;
 
-    WiFi.begin(ssid, password);  // Wi-Fiƒlƒbƒgƒ[ƒN‚ÉÚ‘±‚·‚é
-    while (WiFi.status() != WL_CONNECTED) {  // Ú‘±‚µ‚½‚©’²‚×‚é
-        delay(500);
-        Serial.print(".");
-    }
-    Serial.println("WiFi connected");
-    Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());  // ƒ[ƒJƒ‹IPƒAƒhƒŒƒX‚ğƒvƒŠƒ“ƒg‚·‚é
-
-    ambient.begin(channelId, writeKey, &client); // ƒ`ƒƒƒlƒ‹ID‚Æƒ‰ƒCƒgƒL[‚ğw’è‚µ‚ÄAmbient‚Ì‰Šú‰»
-
+    // DHT11åˆæœŸåŒ–
     dht.begin();
 }
 
-void loop() {
-    float temp = dht.readHumidity();
-    float humid = dht.readTemperature();
-    Serial.printf("temp: %.2f, humid: %.2f\r\n", temp, humid);
+void loop() 
+{
+    float  humid = dht.readHumidity(); // æ¹¿åº¦[%]
+    float  temp = dht.readTemperature(); // æ°—æ¸©[æ‘‚æ°]
+    Serial.printf("temp: %.1f, humid: %.1f\r\n", temp, humid);
 
-    ambient.set(1, temp);  // Ambient‚Ìƒf[ƒ^1‚É‰·“x‚ğƒZƒbƒg‚·‚é
-    ambient.set(2, humid);  // ƒf[ƒ^2‚É¼“x‚ğƒZƒbƒg‚·‚é
-    ambient.send();  // Ambient‚É‘—M‚·‚é
-
-    delay(300 * 1000);
+    delay(3 * 1000); // 3ç§’ãŠãã«è¨ˆæ¸¬ãƒ»è¡¨ç¤º
 }
